@@ -1,72 +1,75 @@
 <!DOCTYPE html>
-});
-
-
-// --- ANNOUNCEMENTS ---
-const POSTS_KEY = 'family_posts_v1';
-function getPosts() { return JSON.parse(localStorage.getItem(POSTS_KEY) || '[]'); }
-function setPosts(v) { localStorage.setItem(POSTS_KEY, JSON.stringify(v)); renderPosts(); }
-
-
-function renderPosts() {
-const wrap = $('#posts');
-wrap.innerHTML = '';
-const posts = getPosts();
-if (!posts.length) {
-const empty = document.createElement('div');
-empty.className = 'meta';
-empty.textContent = 'No announcements yet. Be the first to post!';
-wrap.appendChild(empty);
-return;
-}
-posts.forEach(p => {
-const card = document.createElement('div');
-card.className = 'person';
-card.innerHTML = `
-<div class="row"><strong>${p.title}</strong><span class="meta">${new Date(p.ts).toLocaleString()}</span></div>
-<div class="meta">${p.body}</div>
-<div class="row">
-${p.author ? `<span class="meta">— ${p.author}</span>` : '<span></span>'}
-<button class="btn" onclick='deletePost("${p.id}")'>Delete</button>
-</div>
-`;
-wrap.appendChild(card);
-});
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Family Retreat Hub</title>
+<meta name="description" content="A private hub to connect family members for our vacation property—directory, calendar, announcements, and more." />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg: #f8fafc; /* slate-50 */
+--card: #ffffff; /* white */
+--ink: #0f172a; /* slate-900 */
+--muted: #475569; /* slate-600 */
+--brand: #8b5e34; /* warm rustic brown */
+--brand-2: #2e7d32; /* deep green accent */
+--ring: rgba(139, 94, 52, 0.35);
+--border: #e2e8f0; /* slate-200 */
 }
 
 
-function newPost() {
-const title = prompt('Announcement title'); if (!title) return;
-const body = prompt('What\'s the update?'); if (!body) return;
-const author = prompt('Your name (optional)') || '';
-const posts = getPosts();
-posts.unshift({ id: crypto.randomUUID(), title, body, author, ts: Date.now() });
-setPosts(posts);
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+margin: 0;
+font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+color: var(--ink);
+background: radial-gradient(1000px 600px at 80% -100px, rgba(46,125,50,.05), transparent 60%), var(--bg);
 }
-function deletePost(id) {
-if (!confirm('Delete this announcement?')) return;
-setPosts(getPosts().filter(x => x.id !== id));
-}
-$('#newPost').addEventListener('click', newPost);
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
 
-// --- CONTACT FORM (sends email using mailto as a fallback) ---
-$('#contactForm').addEventListener('submit', (e) => {
-e.preventDefault();
-const name = $('#cname').value.trim();
-const email = $('#cemail').value.trim();
-const branch = $('#cbranch').value.trim();
-const dates = $('#cdates').value.trim();
-const msg = $('#cmsg').value.trim();
-const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nBranch: ${branch}\nDates: ${dates}\n\nMessage:\n${msg}`);
-window.location.href = `mailto:${LINKS.organizerEmail}?subject=${encodeURIComponent('RSVP / Inquiry from ' + name)}&body=${body}`;
-});
+/* Layout */
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+header { position: sticky; top: 0; z-index: 40; background: rgba(248,250,252,.85); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 24px; }
+.nav a { font-weight: 600; color: var(--ink); padding: 8px 10px; border-radius: 8px; }
+.nav a.active, .nav a:hover { background: #ede9e3; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .2px; }
+.brand-badge { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--brand), #b07a49); display: grid; place-items: center; color: white; font-weight: 800; box-shadow: 0 6px 20px rgba(139,94,52,.25); }
 
 
-// Init
-loadDirectory();
-renderPosts();
-</script>
+.hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; padding: 40px 24px 20px; }
+.hero-card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 28px; box-shadow: 0 10px 30px rgba(2, 6, 23, .05); }
+.hero h1 { font-size: clamp(28px, 4vw, 44px); margin: 0 0 8px; line-height: 1.1; }
+.hero p { margin: 0 0 18px; color: var(--muted); }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); background: white; font-weight: 600; cursor: pointer; transition: transform .04s ease; }
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: var(--brand); color: white; border-color: transparent; box-shadow: 0 10px 24px rgba(139,94,52,.22); }
+.btn.secondary { background: #f1f5f9; }
 
 
-<!--
+.quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.quick .card { padding: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; min-height: 92px; display: grid; gap: 8px; }
+.card h3 { margin: 0; font-size: 16px; }
+.card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+
+section { padding: 34px 24px; }
+section h2 { margin: 0 0 12px; font-size: 26px; }
+.section-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: 0 10px 24px rgba(2, 6, 23, .04); }
+
+
+/* Directory */
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+.toolbar input, .toolbar select { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); outline: none; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.person { border: 1px solid var(--border); border-radius: 14px; padding: 14px; background: linear-gradient(180deg, #fff, #fffdfb); display: grid; gap: 8px; }
+.tag { display: inline-block; background: #ede9e3; color: #5a3c23; font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid #e7dcd1; }
+.meta { color: var(--muted); font-size: 14px; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
