@@ -1,25 +1,72 @@
-<main style="font-family:system-ui;padding:2rem;line-height:1.6;max-width:720px;margin:auto;text-align:center">
-  <h1 style="font-size:2.5rem;font-weight:700">
-    Hello Brentwood Web Designers 👋
-  </h1>
-  <p style="font-size:1.25rem;margin-top:1rem">
-    You ready to hack away???
-  </p>
+<!DOCTYPE html>
+});
 
-  <p style="margin-top:2rem">
-    This site is deployed on <strong>Vercel</strong> using <em>Serverless Functions</em> — no installs, no setup, just creativity and code.
-  </p>
 
-  <p style="margin-top:2rem">
-    Try your first API endpoint:  
-    <a href="/api/hello" style="font-weight:600;color:#0051ff">/api/hello</a>
-  </p>
+// --- ANNOUNCEMENTS ---
+const POSTS_KEY = 'family_posts_v1';
+function getPosts() { return JSON.parse(localStorage.getItem(POSTS_KEY) || '[]'); }
+function setPosts(v) { localStorage.setItem(POSTS_KEY, JSON.stringify(v)); renderPosts(); }
 
-  <hr style="margin:2rem 0">
 
-  <p style="font-size:0.95rem;color:#555">
-    Tip: Set an environment variable named <code>GREETING_NAME</code> in  
-    <strong>Vercel → Project → Settings → Environment Variables</strong>, then redeploy.  
-    Your API will greet you personally next time 🚀
-  </p>
-</main>
+function renderPosts() {
+const wrap = $('#posts');
+wrap.innerHTML = '';
+const posts = getPosts();
+if (!posts.length) {
+const empty = document.createElement('div');
+empty.className = 'meta';
+empty.textContent = 'No announcements yet. Be the first to post!';
+wrap.appendChild(empty);
+return;
+}
+posts.forEach(p => {
+const card = document.createElement('div');
+card.className = 'person';
+card.innerHTML = `
+<div class="row"><strong>${p.title}</strong><span class="meta">${new Date(p.ts).toLocaleString()}</span></div>
+<div class="meta">${p.body}</div>
+<div class="row">
+${p.author ? `<span class="meta">— ${p.author}</span>` : '<span></span>'}
+<button class="btn" onclick='deletePost("${p.id}")'>Delete</button>
+</div>
+`;
+wrap.appendChild(card);
+});
+}
+
+
+function newPost() {
+const title = prompt('Announcement title'); if (!title) return;
+const body = prompt('What\'s the update?'); if (!body) return;
+const author = prompt('Your name (optional)') || '';
+const posts = getPosts();
+posts.unshift({ id: crypto.randomUUID(), title, body, author, ts: Date.now() });
+setPosts(posts);
+}
+function deletePost(id) {
+if (!confirm('Delete this announcement?')) return;
+setPosts(getPosts().filter(x => x.id !== id));
+}
+$('#newPost').addEventListener('click', newPost);
+
+
+// --- CONTACT FORM (sends email using mailto as a fallback) ---
+$('#contactForm').addEventListener('submit', (e) => {
+e.preventDefault();
+const name = $('#cname').value.trim();
+const email = $('#cemail').value.trim();
+const branch = $('#cbranch').value.trim();
+const dates = $('#cdates').value.trim();
+const msg = $('#cmsg').value.trim();
+const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nBranch: ${branch}\nDates: ${dates}\n\nMessage:\n${msg}`);
+window.location.href = `mailto:${LINKS.organizerEmail}?subject=${encodeURIComponent('RSVP / Inquiry from ' + name)}&body=${body}`;
+});
+
+
+// Init
+loadDirectory();
+renderPosts();
+</script>
+
+
+<!--
