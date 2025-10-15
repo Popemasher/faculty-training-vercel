@@ -1,25 +1,405 @@
-<main style="font-family:system-ui;padding:2rem;line-height:1.6;max-width:720px;margin:auto;text-align:center">
-  <h1 style="font-size:2.5rem;font-weight:700">
-    Hello Brentwood Web Designers 👋
-  </h1>
-  <p style="font-size:1.25rem;margin-top:1rem">
-    You ready to hack away???
-  </p>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LDL‑Smart Kitchen • Heart‑Healthy, High‑Fiber Recipes</title>
+  <meta name="description" content="A curated collection of delicious, quick, heart‑healthy recipes designed to support lower LDL cholesterol — high fiber, low saturated fat, plant‑forward." />
+  <meta property="og:title" content="LDL‑Smart Kitchen" />
+  <meta property="og:description" content="Delicious, quick, heart‑healthy recipes designed to support lower LDL cholesterol." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0e7c86" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1014; /* dark mode base */
+      --panel: #0f1720;
+      --text: #e8f3f3;
+      --muted: #a8c4c4;
+      --brand: #10a0ab;
+      --brand-2: #5fe1d6;
+      --ok: #2dd4bf;
+      --chip: #12333a;
+      --card: #0e1a22;
+      --border: #17323a;
+      --warning: #ffd166;
+    }
+    @media (prefers-color-scheme: light) {
+      :root { --bg:#f6fbfb; --panel:#ffffff; --text:#0d1b1e; --muted:#49696d; --brand:#0e7c86; --chip:#e8f7f7; --card:#ffffff; --border:#dbe9ea; }
+      body { background-image: radial-gradient(60rem 60rem at 10% -10%, #e7fbff 0%, rgba(255,255,255,0) 60%), radial-gradient(50rem 50rem at 110% 10%, #e7fff7 0%, rgba(255,255,255,0) 50%); }
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background: var(--bg); color: var(--text); }
+    .container { max-width: 1100px; margin: 0 auto; padding: clamp(16px, 3vw, 28px); }
+    header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); background: color-mix(in lab, var(--bg) 80%, transparent); border-bottom: 1px solid var(--border); }
+    .brand { display:flex; gap:12px; align-items:center; }
+    .logo { width:38px; height:38px; border-radius:10px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); display:grid; place-items:center; box-shadow: 0 10px 20px rgba(16,160,171,.25); }
+    .logo svg { width:24px; height:24px; fill:white; }
+    h1 { font-size:clamp(20px, 3.2vw, 32px); margin:0; letter-spacing:.2px; }
+    .sub { color: var(--muted); font-weight: 400; margin-top: 2px; }
+    .tools { display:grid; gap:14px; grid-template-columns: 1fr; padding-block: 16px; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .search { flex:1 1 280px; display:flex; align-items:center; gap:10px; background: var(--panel); border:1px solid var(--border); border-radius:14px; padding:10px 14px; }
+    .search input { flex:1; border:none; outline:none; background:transparent; color:var(--text); font-size:15px; }
+    .chip { border:1px solid var(--border); background: var(--chip); color: var(--text); padding:8px 12px; border-radius: 999px; font-size: 13px; cursor:pointer; user-select:none; transition:.15s transform ease; }
+    .chip[aria-pressed="true"] { background: linear-gradient(135deg, color-mix(in lab, var(--brand) 85%, #000 15%), color-mix(in lab, var(--brand-2) 85%, #000 15%)); border-color: transparent; }
+    .chip:hover { transform: translateY(-1px); }
+    .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+    .card { background: var(--card); border:1px solid var(--border); border-radius: 18px; overflow:hidden; display:flex; flex-direction:column; }
+    .img { aspect-ratio: 4/3; background: linear-gradient(135deg, #0b3940, #0e7c86); display:grid; place-items:center; color:#fff; }
+    .img svg { opacity:.85; }
+    .card .body { padding:14px 16px 18px; display:flex; flex-direction:column; gap:10px; }
+    .title { font-weight: 700; font-size: 18px; line-height:1.2; }
+    .tags { display:flex; flex-wrap:wrap; gap:8px; }
+    .tag { font-size: 12px; padding:4px 8px; border-radius: 999px; border:1px solid var(--border); color: var(--muted); }
+    .nutri { display:flex; gap:10px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+    .btnrow { display:flex; gap:10px; margin-top:6px; }
+    button, .btn { appearance:none; border:none; background: var(--panel); border:1px solid var(--border); color: var(--text); padding:10px 12px; border-radius: 12px; font-weight:600; cursor:pointer; }
+    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); border: none; color:#00272b; }
+    .btn.ghost { background:transparent; }
+    details { border-top:1px dashed var(--border); padding-top:10px; }
+    details[open] summary { color: var(--brand-2); }
+    summary { cursor:pointer; list-style:none; }
+    .why { background: var(--panel); border:1px solid var(--border); border-radius: 16px; padding:18px; display:grid; gap:10px; }
+    .why ul { margin:0; padding-left: 18px; }
+    footer { color: var(--muted); font-size: 13px; border-top:1px solid var(--border); margin-top: 30px; padding-top: 16px; }
+    .pill { display:inline-flex; align-items:center; gap:8px; background: var(--chip); border:1px solid var(--border); padding:8px 12px; border-radius:999px; font-size:12px; }
+    .pill svg { width:16px; height:16px; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "LDL‑Smart Recipes",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Overnight Oats with Berries & Chia"},
+      {"@type": "ListItem", "position": 2, "name": "Smoky Lentil & Veggie Stew"},
+      {"@type": "ListItem", "position": 3, "name": "Baked Salmon with Walnut‑Citrus Gremolata"},
+      {"@type": "ListItem", "position": 4, "name": "Chickpea & Spinach Tomato Curry (No‑Cream)"},
+      {"@type": "ListItem", "position": 5, "name": "Barley, Mushroom & Greens Pilaf"},
+      {"@type": "ListItem", "position": 6, "name": "Roasted Veggie & White Bean Sheet‑Pan"},
+      {"@type": "ListItem", "position": 7, "name": "Avocado‑Lime Black Bean Salad"},
+      {"@type": "ListItem", "position": 8, "name": "Tofu, Broccoli & Peanut‑Ginger Stir‑Fry"}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container brand" role="banner">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm0 2a8 8 0 1 1-8 8 8.009 8.009 0 0 1 8-8Zm3.8 4.6a1 1 0 0 1 .2 1.4l-4.6 6a1 1 0 0 1-1.5.1l-2.1-2.1a1 1 0 1 1 1.4-1.4l1.3 1.3 3.9-5a1 1 0 0 1 1.4-.2Z"/></svg>
+      </div>
+      <div>
+        <h1>LDL‑Smart Kitchen</h1>
+        <div class="sub">High‑fiber, low‑saturated‑fat, plant‑forward recipes that support healthy LDL levels.</div>
+      </div>
+    </div>
+  </header>
 
-  <p style="margin-top:2rem">
-    This site is deployed on <strong>Vercel</strong> using <em>Serverless Functions</em> — no installs, no setup, just creativity and code.
-  </p>
+  <main class="container" id="app">
+    <section class="tools" aria-label="Search and filters">
+      <div class="toolbar">
+        <div class="search" role="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10 2a8 8 0 1 0 5 14.3l4.4 4.3 1.4-1.4-4.3-4.4A8 8 0 0 0 10 2Zm0 2a6 6 0 1 1 0 12A6 6 0 0 1 10 4Z"/></svg>
+          <input id="q" placeholder="Search recipes, ingredients, tags… (e.g., oats, lentils, 30 min)" aria-label="Search recipes" />
+        </div>
+        <div class="toolbar" role="group" aria-label="Quick filters">
+          <button class="chip" data-filter="high-fiber" aria-pressed="false">High fiber</button>
+          <button class="chip" data-filter="plant-based" aria-pressed="false">Plant‑based</button>
+          <button class="chip" data-filter="fish" aria-pressed="false">Fish</button>
+          <button class="chip" data-filter="under-30" aria-pressed="false">≤ 30 min</button>
+          <button class="chip" data-filter="gluten-free" aria-pressed="false">Gluten‑free</button>
+          <button class="chip" data-filter="meal-prep" aria-pressed="false">Meal‑prep</button>
+        </div>
+        <div class="toolbar">
+          <span class="pill" title="General guidance — not medical advice">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 2h2v6h-2zm0 14h2v6h-2z"/></svg>
+            Focus: soluble fiber, unsaturated fats, minimal added sugar/salt; avoid coconut oil, ghee, high‑sat‑fat dairy.
+          </span>
+        </div>
+      </div>
+    </section>
 
-  <p style="margin-top:2rem">
-    Try your first API endpoint:  
-    <a href="/api/hello" style="font-weight:600;color:#0051ff">/api/hello</a>
-  </p>
+    <section aria-label="Recipe results">
+      <div class="grid" id="grid" aria-live="polite"></div>
+    </section>
 
-  <hr style="margin:2rem 0">
+    <section aria-label="Why these help" style="margin-top:24px;">
+      <div class="why">
+        <h2 style="margin:0">Why these recipes support healthy LDL</h2>
+        <ul>
+          <li><strong>Soluble fiber</strong> (oats, barley, beans, chia) forms a gel that binds bile acids, helping your body excrete cholesterol rather than reabsorb it.</li>
+          <li><strong>Plant sterols/stanols</strong> (nuts, seeds, legumes) compete with cholesterol for absorption in the gut.</li>
+          <li><strong>Unsaturated fats</strong> (olive oil, avocado, walnuts, salmon’s omega‑3s) can improve lipid profiles when they replace saturated fats.</li>
+          <li><strong>Sodium & added‑sugar mindful</strong> seasoning keeps blood pressure and triglycerides in check, supporting cardiometabolic health overall.</li>
+        </ul>
+        <p style="margin:0; color:var(--muted)">This site is informational only and not a substitute for professional medical advice. If you have a medical condition, consult your clinician or dietitian.</p>
+      </div>
+    </section>
 
-  <p style="font-size:0.95rem;color:#555">
-    Tip: Set an environment variable named <code>GREETING_NAME</code> in  
-    <strong>Vercel → Project → Settings → Environment Variables</strong>, then redeploy.  
-    Your API will greet you personally next time 🚀
-  </p>
-</main>
+    <footer>
+      Made with ♥ for better heart health. <button class="btn ghost" id="print">Print this page</button>
+    </footer>
+  </main>
+
+  <template id="card-template">
+    <article class="card" data-tags="">
+      <div class="img" aria-hidden="true">
+        <svg width="72" height="72" viewBox="0 0 24 24"><path fill="white" d="M4 6h16v12H4z" opacity=".2"/><path fill="white" d="M2 5h20v2H2zm2 4h16v8H4z"/></svg>
+      </div>
+      <div class="body">
+        <div class="title"></div>
+        <div class="tags"></div>
+        <div class="nutri"></div>
+        <details>
+          <summary><strong>Ingredients & steps</strong></summary>
+          <div class="content"></div>
+        </details>
+        <div class="btnrow">
+          <button class="btn primary" data-copy>Copy ingredients</button>
+          <button class="btn" data-save>Save</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script>
+    const RECIPES = [
+      {
+        title: "Overnight Oats with Berries & Chia",
+        tags: ["high-fiber","plant-based","under-30","gluten-free","meal-prep"],
+        nutrition: { fiber: 9, satfat: 1, serves: 1 },
+        ingredients: [
+          "1/2 cup old-fashioned oats",
+          "1 tbsp chia seeds",
+          "1/2 cup unsweetened soy or oat milk",
+          "1/2 cup plain low-fat yogurt (or soy yogurt)",
+          "1 cup mixed berries",
+          "1 tsp honey or maple (optional)",
+          "Cinnamon, pinch of salt"
+        ],
+        steps: [
+          "Mix oats, chia, milk, yogurt, cinnamon, and salt in a jar.",
+          "Refrigerate 4+ hours. Top with berries and a drizzle of honey if desired."
+        ]
+      },
+      {
+        title: "Smoky Lentil & Veggie Stew",
+        tags: ["high-fiber","plant-based","meal-prep","gluten-free"],
+        nutrition: { fiber: 14, satfat: 1, serves: 4 },
+        ingredients: [
+          "1 tbsp extra-virgin olive oil",
+          "1 onion, diced; 2 carrots, diced; 2 celery stalks, diced",
+          "3 garlic cloves, minced",
+          "2 tsp smoked paprika; 1 tsp cumin",
+          "1 cup dry brown or green lentils, rinsed",
+          "1 can (14 oz) no-salt diced tomatoes",
+          "4 cups low-sodium vegetable broth",
+          "2 cups chopped kale",
+          "Lemon juice, pepper"
+        ],
+        steps: [
+          "Sauté onion, carrots, celery in oil 5–7 min; add garlic, spices 1 min.",
+          "Add lentils, tomatoes, broth; simmer 25 min until tender.",
+          "Stir in kale to wilt; finish with lemon and pepper."
+        ]
+      },
+      {
+        title: "Baked Salmon with Walnut‑Citrus Gremolata",
+        tags: ["fish","gluten-free","under-30"],
+        nutrition: { fiber: 2, satfat: 2, serves: 4 },
+        ingredients: [
+          "4 salmon fillets (4–5 oz each)",
+          "1 tsp olive oil, pinch salt & pepper",
+          "1/3 cup finely chopped walnuts",
+          "Zest of 1 lemon + 1 orange, 2 tbsp parsley, 1 small garlic clove, minced"
+        ],
+        steps: [
+          "Heat oven to 400°F (205°C). Brush salmon with oil; season.",
+          "Bake 10–12 min until flaky.",
+          "Mix walnuts, zests, parsley, garlic; spoon over salmon to serve."
+        ]
+      },
+      {
+        title: "Chickpea & Spinach Tomato Curry (No‑Cream)",
+        tags: ["plant-based","high-fiber","gluten-free","meal-prep"],
+        nutrition: { fiber: 12, satfat: 1, serves: 4 },
+        ingredients: [
+          "1 tbsp olive oil",
+          "1 onion, sliced; 2 garlic cloves; 1 tbsp grated ginger",
+          "2 tsp garam masala; 1/2 tsp turmeric; 1/2 tsp chili flakes",
+          "1 can (14 oz) crushed tomatoes",
+          "2 cans (15 oz) chickpeas, rinsed",
+          "4 cups baby spinach",
+          "1/2 cup light coconut milk optional (*use soy milk for lower sat fat)",
+          "Lemon, cilantro"
+        ],
+        steps: [
+          "Sauté aromatics and spices 2–3 min.",
+          "Add tomatoes and chickpeas; simmer 10 min.",
+          "Stir in spinach to wilt; finish with lemon & cilantro."
+        ]
+      },
+      {
+        title: "Barley, Mushroom & Greens Pilaf",
+        tags: ["high-fiber","plant-based","meal-prep"],
+        nutrition: { fiber: 10, satfat: 1, serves: 4 },
+        ingredients: [
+          "1 cup pearled barley, rinsed",
+          "2 1/2 cups low-sodium veg broth",
+          "8 oz mushrooms, sliced",
+          "1 small leek, sliced",
+          "2 cups chopped Swiss chard",
+          "1 tsp olive oil, thyme, pepper"
+        ],
+        steps: [
+          "Simmer barley in broth 25–30 min until tender.",
+          "Sauté mushrooms and leek in 1 tsp oil; fold in chard to wilt.",
+          "Toss with barley; season with thyme and pepper."
+        ]
+      },
+      {
+        title: "Roasted Veggie & White Bean Sheet‑Pan",
+        tags: ["plant-based","high-fiber","gluten-free","under-30","meal-prep"],
+        nutrition: { fiber: 11, satfat: 1, serves: 4 },
+        ingredients: [
+          "1 red onion; 1 red pepper; 1 zucchini; 1 small eggplant, chunks",
+          "1 tbsp olive oil, oregano, pepper",
+          "1 can (15 oz) cannellini beans, rinsed",
+          "1/2 cup cherry tomatoes",
+          "2 tsp red wine vinegar; parsley"
+        ],
+        steps: [
+          "Roast veggies at 425°F (220°C) with 1 tbsp oil, oregano, pepper for 20 min.",
+          "Toss in beans and tomatoes; roast 5 min more. Finish with vinegar & parsley."
+        ]
+      },
+      {
+        title: "Avocado‑Lime Black Bean Salad",
+        tags: ["plant-based","high-fiber","gluten-free","under-30"],
+        nutrition: { fiber: 13, satfat: 2, serves: 4 },
+        ingredients: [
+          "2 cans (15 oz) black beans, rinsed",
+          "1 cup corn (thawed)",
+          "1 red bell pepper, diced; 4 scallions, sliced",
+          "1 avocado, diced",
+          "Dressing: 2 tbsp lime juice, 1 tbsp olive oil, 1/2 tsp cumin, pinch salt"
+        ],
+        steps: [
+          "Whisk dressing. Toss all ingredients; add avocado last to prevent mush.",
+          "Chill 10 min before serving."
+        ]
+      },
+      {
+        title: "Tofu, Broccoli & Peanut‑Ginger Stir‑Fry",
+        tags: ["plant-based","under-30","high-fiber","gluten-free"],
+        nutrition: { fiber: 7, satfat: 2, serves: 4 },
+        ingredients: [
+          "14 oz firm tofu, pressed and cubed",
+          "3 cups broccoli florets; 1 red pepper, sliced",
+          "Sauce: 2 tbsp natural peanut butter, 2 tbsp soy sauce (low‑sodium), 1 tbsp rice vinegar, 1 tsp grated ginger, 1 tsp honey, water to thin"
+        ],
+        steps: [
+          "Sear tofu in a nonstick pan (dry or 1 tsp oil) until golden; remove.",
+          "Stir‑fry veggies 3–4 min; add sauce and tofu; simmer 2 min."
+        ]
+      }
+    ];
+
+    const TAG_LABELS = {
+      "high-fiber": "High fiber",
+      "plant-based": "Plant‑based",
+      "fish": "Fish (omega‑3)",
+      "under-30": "≤ 30 min",
+      "gluten-free": "Gluten‑free",
+      "meal-prep": "Meal‑prep"
+    };
+
+    const grid = document.getElementById('grid');
+    const tpl = document.getElementById('card-template');
+    const q = document.getElementById('q');
+
+    const saved = new Set(JSON.parse(localStorage.getItem('saved') || '[]'));
+
+    function makeCard(r) {
+      const node = tpl.content.cloneNode(true);
+      const art = node.querySelector('article');
+      art.dataset.tags = r.tags.join(' ');
+      node.querySelector('.title').textContent = r.title;
+      const tags = node.querySelector('.tags');
+      r.tags.forEach(t => {
+        const span = document.createElement('span');
+        span.className = 'tag';
+        span.textContent = TAG_LABELS[t] || t;
+        tags.appendChild(span);
+      });
+      const nutri = node.querySelector('.nutri');
+      nutri.innerHTML = `<span class="tag">~${r.nutrition.fiber}g fiber/serving</span> <span class="tag">sat fat: ~${r.nutrition.satfat}g</span> <span class="tag">serves: ${r.nutrition.serves}</span>`;
+      const content = node.querySelector('.content');
+      content.innerHTML = `
+        <h4 class="sr-only">Ingredients</h4>
+        <ul>${r.ingredients.map(i=>`<li>${i}</li>`).join('')}</ul>
+        <h4>Steps</h4>
+        <ol>${r.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+        <p style="color:var(--muted); font-size:12px; margin-top:8px">Tip: Replace butter/ghee with olive oil; cook with minimal oil using nonstick cookware. Add ground flax or chia for extra soluble fiber.</p>
+      `;
+      node.querySelector('[data-copy]').addEventListener('click', async (e) => {
+        const text = `INGREDIENTS\n- ${r.ingredients.join('\n- ')}\n\nSTEPS\n${r.steps.map((s,i)=>`${i+1}. ${s}`).join('\n')}`;
+        try { await navigator.clipboard.writeText(text); e.target.textContent = 'Copied ✔'; setTimeout(()=> e.target.textContent='Copy ingredients', 1500);} catch {}
+      });
+      const saveBtn = node.querySelector('[data-save]');
+      function refreshSave() {
+        const isSaved = saved.has(r.title);
+        saveBtn.textContent = isSaved ? 'Saved' : 'Save';
+        saveBtn.classList.toggle('primary', !isSaved);
+      }
+      saveBtn.addEventListener('click', ()=>{
+        if (saved.has(r.title)) saved.delete(r.title); else saved.add(r.title);
+        localStorage.setItem('saved', JSON.stringify([...saved]));
+        render();
+      });
+      refreshSave();
+      return node;
+    }
+
+    function render() {
+      grid.innerHTML = '';
+      const query = (q.value || '').toLowerCase().trim();
+      const active = [...document.querySelectorAll('.chip[aria-pressed="true"]')].map(c=>c.dataset.filter);
+      RECIPES
+        .filter(r => {
+          const matchesQuery = !query || r.title.toLowerCase().includes(query) || r.ingredients.some(i=>i.toLowerCase().includes(query)) || r.tags.some(t=>t.includes(query));
+          const matchesTags = active.length === 0 || active.every(t => r.tags.includes(t));
+          return matchesQuery && matchesTags;
+        })
+        .sort((a,b) => (saved.has(b.title) - saved.has(a.title)))
+        .forEach(r => grid.appendChild(makeCard(r)));
+      if (!grid.children.length) {
+        const empty = document.createElement('div');
+        empty.style.color = 'var(--muted)';
+        empty.textContent = 'No matches. Try “oats”, “lentils”, “≤ 30 min”, or clear filters.';
+        grid.appendChild(empty);
+      }
+    }
+
+    q.addEventListener('input', render);
+
+    document.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pressed = btn.getAttribute('aria-pressed') === 'true';
+        btn.setAttribute('aria-pressed', String(!pressed));
+        render();
+      });
+    });
+
+    document.getElementById('print').addEventListener('click', () => window.print());
+
+    render();
+  </script>
+</body>
+</html>
