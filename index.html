@@ -9,14 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f8fafc;          /* slate-50 */
+      --bg: #fdf2f2;          /* very light rose */
       --card: #ffffff;        /* white */
-      --ink: #0f172a;         /* slate-900 */
-      --muted: #475569;       /* slate-600 */
-      --brand: #8b5e34;       /* warm rustic brown */
-      --brand-2: #2e7d32;     /* deep green accent */
-      --ring: rgba(139, 94, 52, 0.35);
-      --border: #e2e8f0;      /* slate-200 */
+      --ink: #2b0d0b;         /* near-black warm */
+      --muted: #7c3f3a;       /* muted warm */
+      --brand: #7b241c;       /* dark ranch red */
+      --brand-2: #a93226;     /* lighter ranch red */
+      --ring: rgba(123, 36, 28, 0.35);
+      --border: #f1d4d4;      /* pale red border */
     }
 
     * { box-sizing: border-box; }
@@ -25,29 +25,36 @@
       margin: 0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--ink);
-      background: radial-gradient(1000px 600px at 80% -100px, rgba(46,125,50,.05), transparent 60%), var(--bg);
+      background: radial-gradient(1000px 600px at 80% -100px, rgba(123,36,28,.06), transparent 60%), var(--bg);
     }
     a { color: var(--brand); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     /* Layout */
     .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
-    header { position: sticky; top: 0; z-index: 40; background: rgba(248,250,252,.85); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+    header { position: sticky; top: 0; z-index: 40; background: rgba(253,242,242,.85); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
     .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 24px; }
     .nav a { font-weight: 600; color: var(--ink); padding: 8px 10px; border-radius: 8px; }
-    .nav a.active, .nav a:hover { background: #ede9e3; }
+    .nav a.active, .nav a:hover { background: #fbeaea; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .2px; }
-    .brand-badge { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--brand), #b07a49); display: grid; place-items: center; color: white; font-weight: 800; box-shadow: 0 6px 20px rgba(139,94,52,.25); }
+    .brand-badge { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); display: grid; place-items: center; color: white; font-weight: 800; box-shadow: 0 6px 20px rgba(123,36,28,.25); }
 
-    .hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; padding: 40px 24px 20px; }
+    /* Banner */
+    .banner { background: linear-gradient(180deg, var(--brand), var(--brand-2)); color: #fff; }
+    .banner .container { padding: 28px 24px; }
+    .banner h1 { font-size: clamp(28px, 4vw, 44px); margin: 0 0 8px; line-height: 1.1; }
+    .banner p { margin: 0 0 16px; color: rgba(255,255,255,.9); }
+    .banner .btn.primary { background: #fff; color: var(--brand); box-shadow: 0 10px 24px rgba(0,0,0,.15); }
+    .banner .btn { border-color: rgba(255,255,255,.35); }
+
+    /* Content cards */
+    .hero { padding: 24px; }
     .hero-card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 28px; box-shadow: 0 10px 30px rgba(2, 6, 23, .05); }
-    .hero h1 { font-size: clamp(28px, 4vw, 44px); margin: 0 0 8px; line-height: 1.1; }
-    .hero p { margin: 0 0 18px; color: var(--muted); }
     .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
     .btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); background: white; font-weight: 600; cursor: pointer; transition: transform .04s ease; }
     .btn:active { transform: translateY(1px); }
-    .btn.primary { background: var(--brand); color: white; border-color: transparent; box-shadow: 0 10px 24px rgba(139,94,52,.22); }
-    .btn.secondary { background: #f1f5f9; }
+    .btn.primary { background: var(--brand); color: white; border-color: transparent; box-shadow: 0 10px 24px rgba(123,36,28,.22); }
+    .btn.secondary { background: #fceaea; }
 
     .quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .quick .card { padding: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; min-height: 92px; display: grid; gap: 8px; }
@@ -63,7 +70,7 @@
     .toolbar input, .toolbar select { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); outline: none; }
     .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .person { border: 1px solid var(--border); border-radius: 14px; padding: 14px; background: linear-gradient(180deg, #fff, #fffdfb); display: grid; gap: 8px; }
-    .tag { display: inline-block; background: #ede9e3; color: #5a3c23; font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid #e7dcd1; }
+    .tag { display: inline-block; background: #fde2e2; color: #7b241c; font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid #f8caca; }
     .meta { color: var(--muted); font-size: 14px; }
     .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 
@@ -88,7 +95,6 @@
 
     /* Responsive */
     @media (max-width: 980px) {
-      .hero { grid-template-columns: 1fr; }
       .quick { grid-template-columns: 1fr 1fr; }
       .grid { grid-template-columns: 1fr 1fr; }
       .cols { grid-template-columns: 1fr; }
@@ -118,17 +124,22 @@
     </nav>
   </header>
 
-  <main id="home" class="container">
-    <section class="hero">
-      <div class="hero-card">
-        <h1>Welcome to the Lone Rock Ranch Hub</h1>
-        <p>Plan trips, share updates, and keep everyone connected in one private place. Use the Directory to find contact info, check the Calendar for bookings, and post Announcements for the whole crew.</p>
-        <div class="cta-row">
-          <button class="btn primary" id="addMemberBtn">➕ Join the Directory</button>
-          <a class="btn" href="#calendar-full">📅 View Calendar</a>
-          <a class="btn secondary" href="#announcements">📣 Post Announcement</a>
-        </div>
+  <!-- New banner across the top -->
+  <section class="banner">
+    <div class="container">
+      <h1>Welcome to the Lone Rock Ranch Hub</h1>
+      <p>Plan trips, share updates, and keep everyone connected in one private place. Use the Directory to find contact info, check the Calendar for bookings, and post Announcements for the whole crew.</p>
+      <div class="cta-row">
+        <button class="btn primary" id="addMemberBtn">➕ Join the Directory</button>
+        <a class="btn" href="#calendar-full">📅 View Calendar</a>
+        <a class="btn secondary" href="#announcements">📣 Post Announcement</a>
       </div>
+    </div>
+  </section>
+
+  <main id="home" class="container">
+    <!-- QUICK LINKS -->
+    <section class="hero">
       <div class="hero-card">
         <div class="quick">
           <div class="card">
@@ -259,17 +270,13 @@
     const $ = (s, r=document) => r.querySelector(s);
     const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 
-    // Safe UUID (fallback if crypto.randomUUID is unavailable in sandboxes)
+    // Safe UUID (fallback for sandboxes)
     const uuid = () => (window.crypto && 'randomUUID' in crypto) ? crypto.randomUUID() : 'id-' + Math.random().toString(36).slice(2) + Date.now();
 
-    // Safe storage wrapper: falls back to in-memory store if localStorage is blocked (e.g., sandboxed iframe)
+    // Safe storage wrapper (fallback to memory if localStorage blocked)
     const __MEM = {};
-    const readStore = (k) => {
-      try { return localStorage.getItem(k); } catch { return __MEM[k] ?? null; }
-    };
-    const writeStore = (k, v) => {
-      try { localStorage.setItem(k, v); } catch { __MEM[k] = v; }
-    };
+    const readStore = (k) => { try { return localStorage.getItem(k); } catch { return __MEM[k] ?? null; } };
+    const writeStore = (k, v) => { try { localStorage.setItem(k, v); } catch { __MEM[k] = v; } };
 
     // --- STATIC LINKS (EDITABLE) ---
     const LINKS = {
@@ -290,7 +297,6 @@
     $('#photosLink').href = LINKS.photos;
     $('#docsLink').href = LINKS.docs;
     $('#mapLink').href = LINKS.map;
-    // Keep visible text in sync with the mailto address
     const emailAddress = LINKS.emailAll.replace(/^mailto:/, '');
     $('#emailAll').href = 'mailto:' + emailAddress;
     $('#emailAll').textContent = emailAddress;
@@ -303,14 +309,10 @@
     $$('.calendar').forEach((frame) => {
       const hint = frame.parentElement.querySelector('.calendar-hint');
       if (!hint) return;
-      // Show hint by default; hide when the iframe loads successfully
       hint.style.display = 'block';
       frame.addEventListener('load', () => { hint.style.display = 'none'; });
-      // If load never fires (blocked), hint stays visible
       setTimeout(() => { hint.style.display = hint.style.display || 'block'; }, 2500);
     });
-
-    $('#year').textContent = new Date().getFullYear();
 
     // --- EMERGENCY MODAL ---
     $('#openEmergency').addEventListener('click', () => $('#emModal').classList.add('show'));
@@ -321,7 +323,6 @@
     const STORAGE_KEY = 'family_directory_v1';
     const BRANCHES_KEY = 'family_branches_v1';
 
-    /** Example seed data (delete or replace). */
     const seed = [
       { id: uuid(), name: 'Ava Thompson', branch: 'Thompson', city: 'Seattle, WA', email: 'ava@example.com', phone: '(555) 010-2000', notes: 'Loves hiking; has SUV' },
       { id: uuid(), name: 'Diego Rivera', branch: 'Rivera', city: 'San Diego, CA', email: 'diego@example.com', phone: '(555) 010-3000', notes: 'Has crib + high chair' },
@@ -338,19 +339,14 @@
       populateBranchFilter();
     }
 
-    function getPeople() {
-      return JSON.parse(readStore(STORAGE_KEY) || '[]');
-    }
-    function setPeople(list) {
-      writeStore(STORAGE_KEY, JSON.stringify(list));
-      renderDirectory();
-      populateBranchFilter();
-    }
+    function getPeople() { return JSON.parse(readStore(STORAGE_KEY) || '[]'); }
+    function setPeople(list) { writeStore(STORAGE_KEY, JSON.stringify(list)); renderDirectory(); populateBranchFilter(); }
 
     function renderDirectory() {
-      const query = $('#search').value.toLowerCase();
-      const branch = $('#branchFilter').value;
+      const query = ($('#search')?.value || '').toLowerCase();
+      const branch = $('#branchFilter')?.value || '';
       const grid = $('#people');
+      if (!grid) return;
       grid.innerHTML = '';
       let people = getPeople();
       if (branch) people = people.filter(p => p.branch === branch);
@@ -377,6 +373,7 @@
 
     function populateBranchFilter() {
       const select = $('#branchFilter');
+      if (!select) return;
       const branches = [...new Set(getPeople().map(p => p.branch).filter(Boolean))];
       const current = select.value;
       select.innerHTML = '<option value="">All branches</option>' + branches.map(b => `<option ${b===current?'selected':''} value="${b}">${b}</option>`).join('');
@@ -399,29 +396,22 @@
       setPeople(people);
     }
 
-    function editPerson(id) {
-      const p = getPeople().find(p => p.id === id);
-      if (p) addOrEditPerson(p);
-    }
-
-    function removePerson(id) {
-      if (!confirm('Remove this person from the directory?')) return;
-      setPeople(getPeople().filter(p => p.id !== id));
-    }
+    function editPerson(id) { const p = getPeople().find(p => p.id === id); if (p) addOrEditPerson(p); }
+    function removePerson(id) { if (!confirm('Remove this person from the directory?')) return; setPeople(getPeople().filter(p => p.id !== id)); }
 
     $('#addMemberBtn').addEventListener('click', () => addOrEditPerson());
-    $('#search').addEventListener('input', renderDirectory);
-    $('#branchFilter').addEventListener('change', renderDirectory);
+    $('#search')?.addEventListener('input', renderDirectory);
+    $('#branchFilter')?.addEventListener('change', renderDirectory);
 
     // Export / Import JSON
-    $('#exportBtn').addEventListener('click', () => {
+    $('#exportBtn')?.addEventListener('click', () => {
       const blob = new Blob([JSON.stringify(getPeople(), null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = 'family-directory.json'; a.click();
       URL.revokeObjectURL(url);
     });
-    $('#importFile').addEventListener('change', (e) => {
+    $('#importFile')?.addEventListener('change', (e) => {
       const file = e.target.files?.[0]; if (!file) return;
       const reader = new FileReader();
       reader.onload = () => {
@@ -435,10 +425,11 @@
     // --- ANNOUNCEMENTS ---
     const POSTS_KEY = 'family_posts_v1';
     function getPosts() { return JSON.parse(readStore(POSTS_KEY) || '[]'); }
-    function setPosts(v) { writeStore(POSTS_KEY, JSON.stringify(v)); renderPosts(); }(v) { localStorage.setItem(POSTS_KEY, JSON.stringify(v)); renderPosts(); }
+    function setPosts(v) { writeStore(POSTS_KEY, JSON.stringify(v)); renderPosts(); }
 
     function renderPosts() {
       const wrap = $('#posts');
+      if (!wrap) return;
       wrap.innerHTML = '';
       const posts = getPosts();
       if (!posts.length) {
@@ -468,24 +459,27 @@
       const body = prompt('What\'s the update?'); if (!body) return;
       const author = prompt('Your name (optional)') || '';
       const posts = getPosts();
-      posts.unshift({ id: crypto.randomUUID(), title, body, author, ts: Date.now() });
+      posts.unshift({ id: uuid(), title, body, author, ts: Date.now() });
       setPosts(posts);
     }
-    function deletePost(id) {
-      if (!confirm('Delete this announcement?')) return;
-      setPosts(getPosts().filter(x => x.id !== id));
-    }
-    $('#newPost').addEventListener('click', newPost);
+    function deletePost(id) { if (!confirm('Delete this announcement?')) return; setPosts(getPosts().filter(x => x.id !== id)); }
+    $('#newPost')?.addEventListener('click', newPost);
 
     // --- CONTACT FORM (mailto fallback) ---
-    $('#contactForm').addEventListener('submit', (e) => {
+    $('#contactForm')?.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = $('#cname').value.trim();
       const email = $('#cemail').value.trim();
       const branch = $('#cbranch').value.trim();
       const dates = $('#cdates').value.trim();
       const msg = $('#cmsg').value.trim();
-      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nBranch: ${branch}\nDates: ${dates}\n\nMessage:\n${msg}`);
+      const body = encodeURIComponent(`Name: ${name}
+Email: ${email}
+Branch: ${branch}
+Dates: ${dates}
+
+Message:
+${msg}`);
       window.location.href = `mailto:${LINKS.organizerEmail}?subject=${encodeURIComponent('RSVP / Inquiry from ' + name)}&body=${body}`;
     });
 
@@ -495,3 +489,4 @@
   </script>
 </body>
 </html>
+
